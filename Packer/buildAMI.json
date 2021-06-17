@@ -2,6 +2,7 @@
  "variables": {
    "region": "eu-west-1",
    "ssh_username": "ubuntu",
+   "base_ami": "ami-0a8e758f5e873d1c1",
    "instance_type": "t2.micro",
    "temporary_security_group_source_cidrs": "{{user `ec2_ip`}}/32",
    "associate_public_ip_address": "true"
@@ -10,22 +11,12 @@
      {
        "type": "amazon-ebs",
        "region": "{{user `region`}}",
-       "source_ami_filter": {
-           "filters": {
-                  "virtualization-type": "hvm",
-                  "name": "ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*",
-                  "root-device-type": "ebs"
-           },
-           "owners": [
-                   "098668202786"
-            ],
-           "most_recent": true
-       },
+       "source_ami": "{{user `base_ami`}}",
        "instance_type": "{{user `instance_type` }}",
        "ssh_username": "{{user `ssh_username`}}",
-       "ami_name": "{{user `env`}}-{{user `app_name`}}-AMI-{{isotime \"01022006-150405\"}}",
+       "ami_name": "AMI-Apache-{{timestamp}}",
        "temporary_security_group_source_cidrs": "{{user `temporary_security_group_source_cidrs`}}",
-       "associate_public_ip_address": "{{user `associate_public_ip_address`}}",
+       "associate_public_ip_address": true,
        "tags": {
          "Name": "Packer-Ansible"
         }
