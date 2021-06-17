@@ -25,7 +25,7 @@
        "ssh_username": "{{user `ssh_username`}}",
        "ami_name": "{{user 'env'}}-{{user 'app_name'}}-AMI-{{isotime \"01022006-150405\"}}",
        "temporary_security_group_source_cidrs": "{{user `temporary_security_group_source_cidrs`}}",
-       "associate_public_ip_address": "{{user 'associate_public_ip_address'}},
+       "associate_public_ip_address": "{{user 'associate_public_ip_address'}}",
        "tags": {
          "Name": "Packer-Ansible"
         }
