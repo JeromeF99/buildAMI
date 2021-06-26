@@ -19,7 +19,7 @@
        "associate_public_ip_address": true,
        "tags": {
          "Name": "{{user `env`}}-{{user `app_name`}}-AMI",
-         "Port": "{{user `app_port}}"
+         "Port": "{{user `app_port`}}"
         }
     }
  ],
