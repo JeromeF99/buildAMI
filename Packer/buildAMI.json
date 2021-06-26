@@ -18,7 +18,8 @@
        "temporary_security_group_source_cidrs": "{{user `temporary_security_group_source_cidrs`}}",
        "associate_public_ip_address": true,
        "tags": {
-         "Name": "{{user `env`}}-{{user `app_name`}}-AMI"
+         "Name": "{{user `env`}}-{{user `app_name`}}-AMI",
+         "Port": "{{user `app_port}}"
         }
     }
  ],
