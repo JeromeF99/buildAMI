@@ -174,9 +174,11 @@
      - name: Build Docker image from Dockerfile
        become: yes
        docker_image:
-        name: web
-        path: docker
-        state: build
+         name: web
+         build:
+           path: docker
+           source: build
+         state: present
      
      - name: Running the container
        become: yes
