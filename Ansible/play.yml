@@ -56,13 +56,13 @@
          path: /var/www/html
          state: absent
 
-     - name: Git checkout website
-       become: yes
-       git:
-         repo: "{{ app_repo }}"
-         dest: /var/www/html
-       notify:
-         - restart apache2
+#     - name: Git checkout website
+#       become: yes
+#       git:
+#         repo: "{{ app_repo }}"
+#         dest: /var/www/html
+#       notify:
+#         - restart apache2
      
      - name: Install apt-transport-https
        become: yes
@@ -145,11 +145,40 @@
          dest: "/usr/local/bin/ctop"
          mode: 0755
          
-     - name: Reboot server in order for changes to take place
+#     - name: Reboot server in order for changes to take place
+#       become: yes
+#       shell: "sleep 1 && reboot"
+#       async: 1
+#       poll: 0
+       
+     - name: Creates directory
        become: yes
-       shell: "sleep 1 && reboot"
-       async: 1
-       poll: 0
+       file:
+         path: docker
+         state: directory
+         
+     - name: Git checkout nodejs site
+       become: yes
+       git:
+         repo: "{{ app_repo }}"
+         dest: docker
+     
+     - name: Build Docker image from Dockerfile
+       become: yes
+       docker_image:
+        name: web
+        path: docker
+        state: build
+     
+     - name: Running the container
+       become: yes
+       docker_container:
+         image: web:latest
+         path: docker
+         state: running
+        
+     - name: Check if container is running
+       shell: docker ps
      
  handlers:
    - name: restart apache2
