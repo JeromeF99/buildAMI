@@ -93,36 +93,36 @@
          repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ubuntu_version.stdout }} stable"
          state: present
       
-    - name: Install Docker
-      apt:
-        name: "docker-ce"
-        state: present
-        force_apt_get: "yes"
+     - name: Install Docker
+       apt:
+         name: "docker-ce"
+         state: present
+         force_apt_get: "yes"
    
-   - name: Test Docker with hello world example
-     shell: "docker run hello-world"
-     register: hello_world_output
+    - name: Test Docker with hello world example
+      shell: "docker run hello-world"
+      register: hello_world_output
    
-   - name: Show output of hello word example
-     debug:
-       msg: "Container Output: {{hello_world_output.stdout}}"    
+    - name: Show output of hello word example
+      debug:
+        msg: "Container Output: {{hello_world_output.stdout}}"    
   
-   - name: Install Docker Compose
-     get_url:
-       url: https://github.com/docker/compose/releases/download/{{ DOCKER_COMPOSE_VERSION }}/docker-compose-Linux-x86_64
-       dest: "/usr/local/bin/docker-compose"
-       mode: 0755
+    - name: Install Docker Compose
+      get_url:
+        url: https://github.com/docker/compose/releases/download/{{ DOCKER_COMPOSE_VERSION }}/docker-compose-Linux-x86_64
+        dest: "/usr/local/bin/docker-compose"
+        mode: 0755
  
-   - name: Install Ctop
-     get_url:
-       url: https://github.com/bcicen/ctop/releases/download/v{{ CTOP_VERSION }}/ctop-{{ CTOP_VERSION }}-linux-amd64
-       dest: "/usr/local/bin/ctop"
-       mode: 0755
+    - name: Install Ctop
+      get_url:
+        url: https://github.com/bcicen/ctop/releases/download/v{{ CTOP_VERSION }}/ctop-{{ CTOP_VERSION }}-linux-amd64
+        dest: "/usr/local/bin/ctop"
+        mode: 0755
 
-   - name: Reboot server in order for changes to take place
-     shell: "sleep 1 && reboot"
-     async: 1
-     poll: 0
+    - name: Reboot server in order for changes to take place
+      shell: "sleep 1 && reboot"
+      async: 1
+      poll: 0
      
  handlers:
    - name: restart apache2
