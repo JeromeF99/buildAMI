@@ -1,17 +1,6 @@
 ---
 -
  hosts: all
- vars: 
-    CTOP_VERSION: "0.7.3"
-    DOCKER_COMPOSE_VERSION: "1.25.1"
-    DOCKER_PACKAGES:
-      - apt-transport-https
-      - ca-certificates
-      - curl
-      - gnupg-agent
-      - software-properties-common
-    USER: "ubuntu"
- 
  tasks:
      - name: Install Python3
        become: yes
@@ -75,11 +64,25 @@
        notify:
          - restart apache2
      
-     - name: Install packages needed for Docker
-       apt: 
-         name: "{{DOCKER_PACKAGES}}"
-         state: present
-         force_apt_get: "yes"
+     - name: Install apt-transport-https
+       become: yes
+       apt: name=apt-transport-https update_cache=yes state=latest
+      
+     - name: Install ca-certificates
+       become: yes
+       apt: name=ca-certificates update_cache=yes state=latest
+     
+     - name: Install curl
+       become: yes
+       apt: name=curl update_cache=yes state=latest
+     
+     - name: Install gnupg-agent
+       become: yes
+       apt: name=gnupg-agent update_cache=yes state=latest
+       
+     - name: Install software-properties-common
+       become: yes
+       apt: name=software-properties-common update_cache=yes state=latest
      
      - name: Add Docker GPG apt Key
        apt_key: 
@@ -114,21 +117,21 @@
          name: "docker"
          state: present
 
-     - name: Adding user {{ USER }} to docker group  
+     - name: Adding user ubuntu to docker group  
        user:
-         name: "{{ USER }}"
+         name: "ubuntu"
          groups: "docker"
          append: "yes"
          
      - name: Install Docker Compose
        get_url:
-         url: https://github.com/docker/compose/releases/download/{{ DOCKER_COMPOSE_VERSION }}/docker-compose-Linux-x86_64
+         url: https://github.com/docker/compose/releases/download/1.25.1/docker-compose-Linux-x86_64
          dest: "/usr/local/bin/docker-compose"
          mode: 0755
  
      - name: Install Ctop
        get_url:
-         url: https://github.com/bcicen/ctop/releases/download/v{{ CTOP_VERSION }}/ctop-{{ CTOP_VERSION }}-linux-amd64
+         url: https://github.com/bcicen/ctop/releases/download/v0.7.3/ctop-0.7.3-linux-amd64
          dest: "/usr/local/bin/ctop"
          mode: 0755
 
