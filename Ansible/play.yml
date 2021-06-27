@@ -10,13 +10,13 @@
        become: yes
        apt: name=git update_cache=yes state=latest
 
-     - name: Install Apache2
-       become: yes
-       apt: name=apache2 update_cache=yes state=latest
+#     - name: Install Apache2
+#       become: yes
+#       apt: name=apache2 update_cache=yes state=latest
 
-     - name: enabled mod_rewrite
-       become: yes
-       apache2_module: name=rewrite state=present
+#     - name: enabled mod_rewrite
+#       become: yes
+#       apache2_module: name=rewrite state=present
 
 #     - name: apache2 listen on port 443
 #       become: yes
@@ -26,35 +26,35 @@
 #       become: yes
 #       lineinfile: dest=/etc/apache2/sites-available/000-default.conf regexp="^<VirtualHost \*:80>" line="<VirtualHost *:443>" state=present
 
-     - name: remove default Apache port.conf
-       become: yes
-       file: 
-         path: /etc/apache2/ports.conf
-         state: absent
+#     - name: remove default Apache port.conf
+#       become: yes
+#       file: 
+#         path: /etc/apache2/ports.conf
+#         state: absent
          
-     - name: remove default Apache default.conf
-       become: yes
-       file: 
-         path: /etc/apache2/sites-available/000-default.conf
-         state: absent
+#     - name: remove default Apache default.conf
+#       become: yes
+#       file: 
+#         path: /etc/apache2/sites-available/000-default.conf
+#         state: absent
          
-     - name: Create Apache port.conf
-       become: yes
-       template:
-          src: templates/ports.conf.j2
-          dest: /etc/apache2/ports.conf
+#     - name: Create Apache port.conf
+#       become: yes
+#       template:
+#          src: templates/ports.conf.j2
+#          dest: /etc/apache2/ports.conf
           
-     - name: Create Apache default.conf
-       become: yes
-       template:
-          src: templates/000-default.conf.j2
-          dest: /etc/apache2/sites-available/000-default.conf
+#     - name: Create Apache default.conf
+#       become: yes
+#       template:
+#          src: templates/000-default.conf.j2
+#          dest: /etc/apache2/sites-available/000-default.conf
        
-     - name: remove default website directory
-       become: yes
-       file:
-         path: /var/www/html
-         state: absent
+#     - name: remove default website directory
+#       become: yes
+#       file:
+#         path: /var/www/html
+#         state: absent
 
 #     - name: Git checkout website
 #       become: yes
@@ -175,7 +175,9 @@
        become: yes
        docker_image:
          name: web
-         path: docker
+         build:
+           path: docker
+           source: build
          state: present
      
      - name: Running the container
