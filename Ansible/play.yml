@@ -175,9 +175,7 @@
        become: yes
        docker_image:
          name: web
-         build:
-           path: docker
-           source: build
+         path: docker
          state: present
      
      - name: Running the container
