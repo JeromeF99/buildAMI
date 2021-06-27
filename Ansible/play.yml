@@ -182,6 +182,7 @@
        become: yes
        docker_container:
          image: web:latest
+         name: webApp
          state: started
         
      - name: Check if container is running
