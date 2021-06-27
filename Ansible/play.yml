@@ -10,6 +10,7 @@
       - curl
       - gnupg-agent
       - software-properties-common
+   USER: "ubuntu"
  tasks:
      - name: Install Python3
        become: yes
@@ -106,7 +107,18 @@
      - name: Show output of hello word example
        debug:
          msg: "Container Output: {{hello_world_output.stdout}}"    
-  
+     
+     - name: Create docker group
+       group:
+         name: "docker"
+         state: present
+
+     - name: Adding user {{ USER }} to docker group  
+       user:
+         name: "{{ USER }}"
+         groups: "docker"
+         append: "yes"
+         
      - name: Install Docker Compose
        get_url:
          url: https://github.com/docker/compose/releases/download/{{ DOCKER_COMPOSE_VERSION }}/docker-compose-Linux-x86_64
