@@ -186,11 +186,17 @@
        docker_container:
          image: web:latest
          name: webApp
-         state: present
+         state: started
         
      - name: Check if container is running
        become: yes
-       shell: docker ps
+       shell: "docker ps"
+       register: ps_output
+   
+     - name: Show output of docker ps
+       become: yes
+       debug:
+         msg: "Container Output: {{ps_output.stdout}}" 
      
  handlers:
    - name: restart apache2
