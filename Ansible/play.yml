@@ -182,8 +182,7 @@
        become: yes
        docker_container:
          image: web:latest
-         path: docker
-         state: running
+         state: started
         
      - name: Check if container is running
        shell: docker ps
