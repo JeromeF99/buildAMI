@@ -151,11 +151,11 @@
        async: 1
        poll: 0
        
-    - name: Creates directory
-      become: yes
-      file:
-        path: docker
-        state: directory
+     - name: Creates directory
+       become: yes
+       file:
+         path: docker
+         state: directory
          
      - name: Git checkout nodejs site
        become: yes
