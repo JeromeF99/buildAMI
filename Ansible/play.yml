@@ -177,6 +177,7 @@
          name: web
          build:
            path: docker
+           pull: yes
          source: build
          state: present
      
@@ -185,7 +186,7 @@
        docker_container:
          image: web:latest
          name: webApp
-         state: started
+         state: present
         
      - name: Check if container is running
        become: yes
