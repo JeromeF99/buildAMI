@@ -56,13 +56,13 @@
          path: /var/www/html
          state: absent
 
-     - name: Git checkout website
-       become: yes
-       git:
-         repo: "{{ app_repo }}"
-         dest: /var/www/html
-       notify:
-         - restart apache2
+#     - name: Git checkout website
+#       become: yes
+#       git:
+#         repo: "{{ app_repo }}"
+#         dest: /var/www/html
+#       notify:
+#         - restart apache2
      
      - name: Install apt-transport-https
        become: yes
