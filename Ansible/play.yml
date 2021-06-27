@@ -110,11 +110,6 @@
    debug:
      msg: "Container Output: {{hello_world_output.stdout}}"
 
- - name: Create docker group
-   group:
-     name: "docker"
-     state: present
-
  - name: Install Docker Compose
    get_url:
      url: https://github.com/docker/compose/releases/download/{{ DOCKER_COMPOSE_VERSION }}/docker-compose-Linux-x86_64
