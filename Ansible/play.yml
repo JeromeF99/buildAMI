@@ -186,6 +186,7 @@
          state: started
         
      - name: Check if container is running
+       become: yes
        shell: docker ps
      
  handlers:
