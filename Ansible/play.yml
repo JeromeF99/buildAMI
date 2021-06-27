@@ -10,7 +10,8 @@
       - curl
       - gnupg-agent
       - software-properties-common
-   USER: "ubuntu"
+    USER: "ubuntu"
+ 
  tasks:
      - name: Install Python3
        become: yes
