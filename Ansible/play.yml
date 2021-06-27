@@ -144,12 +144,35 @@
          url: https://github.com/bcicen/ctop/releases/download/v0.7.3/ctop-0.7.3-linux-amd64
          dest: "/usr/local/bin/ctop"
          mode: 0755
-
+         
      - name: Reboot server in order for changes to take place
        become: yes
        shell: "sleep 1 && reboot"
        async: 1
        poll: 0
+         
+     - name: Git checkout nodejs site
+       become: yes
+       git:
+         repo: "{{ app_repo }}"
+         dest: /home/ubuntu
+     
+     - name: Build Docker image from Dockerfile
+       become: yes
+       docker_image:
+        name: web
+        path: /home/ubuntu
+        state: build
+     
+     - name: Running the container
+       become: yes
+       docker_container:
+        image: web:latest
+        path: /home/ubuntu
+        state: running
+        
+     - name: Check if container is running
+       shell: docker ps
      
  handlers:
    - name: restart apache2
