@@ -10,14 +10,6 @@
        become: yes
        apt: name=git update_cache=yes state=latest
      
-     - name: Install apt-transport-https
-       become: yes
-       apt: name=apt-transport-https update_cache=yes state=latest
-      
-     - name: Install ca-certificates
-       become: yes
-       apt: name=ca-certificates update_cache=yes state=latest
-     
      - name: Install gnupg-agent
        become: yes
        apt: name=gnupg-agent update_cache=yes state=latest
