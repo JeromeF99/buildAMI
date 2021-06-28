@@ -187,6 +187,7 @@
          image: web:latest
          name: webApp
          state: started
+         restart_policy: always
         
      - name: Check if container is running
        become: yes
