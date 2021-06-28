@@ -63,19 +63,6 @@
        become: yes
        debug:
          msg: "Container Output: {{hello_world_output.stdout}}"    
-     
-     - name: Create docker group
-       become: yes
-       group:
-         name: "docker"
-         state: present
-
-     - name: Adding user ubuntu to docker group
-       become: yes
-       user:
-         name: "ubuntu"
-         groups: "docker"
-         append: "yes"
        
      - name: Creates directory
        become: yes
