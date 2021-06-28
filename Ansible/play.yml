@@ -15,6 +15,13 @@
        apt_key: 
          url: https://download.docker.com/linux/ubuntu/gpg
          state: present
+         
+     - name: Install Docker
+       become: yes
+       apt:
+         name: "docker-ce"
+         state: present
+         force_apt_get: "yes"
      
      - name: Save the current Ubuntu release version into a variable
        become: yes
