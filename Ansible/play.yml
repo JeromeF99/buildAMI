@@ -45,6 +45,14 @@
        git:
          repo: "{{ app_repo }}"
          dest: docker
+             
+     - name: Install pip
+       become: yes
+       apt: name=python3-pip update_cache=yes state=latest
+      
+     - name: Install Docker python
+       become: yes
+       pip: name=docker
      
      - name: Build Docker image from Dockerfile
        become: yes
