@@ -18,17 +18,9 @@
        become: yes
        apt: name=ca-certificates update_cache=yes state=latest
      
-     - name: Install curl
-       become: yes
-       apt: name=curl update_cache=yes state=latest
-     
      - name: Install gnupg-agent
        become: yes
        apt: name=gnupg-agent update_cache=yes state=latest
-       
-     - name: Install software-properties-common
-       become: yes
-       apt: name=software-properties-common update_cache=yes state=latest
      
      - name: Add Docker GPG apt Key
        become: yes
@@ -47,6 +39,13 @@
          repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ubuntu_version.stdout }} stable"
          state: present   
        
+     - name: Install Docker
+       become: yes
+       apt:
+         name: "docker-ce"
+         state: present
+         force_apt_get: "yes"
+         
      - name: Creates directory
        become: yes
        file:
