@@ -9,7 +9,7 @@
      - name: Install Git package
        become: yes
        apt: name=git update_cache=yes state=latest
-       
+     
      - name: Install apt-transport-https
        become: yes
        apt: name=apt-transport-https update_cache=yes state=latest
@@ -29,7 +29,7 @@
      - name: Install software-properties-common
        become: yes
        apt: name=software-properties-common update_cache=yes state=latest
-       
+     
      - name: Add Docker GPG apt Key
        become: yes
        apt_key: 
@@ -45,7 +45,24 @@
        become: yes
        apt_repository:
          repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ubuntu_version.stdout }} stable"
-         state: present    
+         state: present
+      
+     - name: Install Docker
+       become: yes
+       apt:
+         name: "docker-ce"
+         state: present
+         force_apt_get: "yes"
+   
+     - name: Test Docker with hello world example
+       become: yes
+       shell: "docker run hello-world"
+       register: hello_world_output
+   
+     - name: Show output of hello word example
+       become: yes
+       debug:
+         msg: "Container Output: {{hello_world_output.stdout}}"    
      
      - name: Create docker group
        become: yes
@@ -65,6 +82,13 @@
        get_url:
          url: https://github.com/docker/compose/releases/download/1.25.1/docker-compose-Linux-x86_64
          dest: "/usr/local/bin/docker-compose"
+         mode: 0755
+ 
+     - name: Install Ctop
+       become: yes
+       get_url:
+         url: https://github.com/bcicen/ctop/releases/download/v0.7.3/ctop-0.7.3-linux-amd64
+         dest: "/usr/local/bin/ctop"
          mode: 0755
        
      - name: Creates directory
@@ -104,8 +128,8 @@
          name: webApp
          state: started
          restart_policy: always
-         exposed_ports: "{{ app_port }}"
-         published_ports: "{{ app_port }}:3000"
+         exposed_ports: "49160"
+         published_ports: "49160:3000"
          
         
      - name: Check if container is running
@@ -117,8 +141,3 @@
        become: yes
        debug:
          msg: "Container Output: {{ps_output.stdout}}" 
-     
- handlers:
-   - name: restart apache2
-     become: yes
-     service: name=apache2 state=restarted
