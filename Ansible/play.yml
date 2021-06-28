@@ -10,10 +10,6 @@
        become: yes
        apt: name=git update_cache=yes state=latest
      
-     - name: Install gnupg-agent
-       become: yes
-       apt: name=gnupg-agent update_cache=yes state=latest
-     
      - name: Add Docker GPG apt Key
        become: yes
        apt_key: 
