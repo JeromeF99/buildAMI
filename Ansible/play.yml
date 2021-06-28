@@ -188,6 +188,7 @@
          name: webApp
          state: started
          restart_policy: always
+         exposed_ports: "{{ app_port }}"
         
      - name: Check if container is running
        become: yes
