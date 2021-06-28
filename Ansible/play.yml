@@ -10,11 +10,16 @@
        become: yes
        apt: name=git update_cache=yes state=latest
      
-     - name: Add Docker GPG apt Key
+     - name: Save the current Ubuntu release version into a variable
        become: yes
-       apt_key: 
-         url: https://download.docker.com/linux/ubuntu/gpg
-         state: present   
+       shell: lsb_release -cs
+       register: ubuntu_version
+    
+     - name: Add Docker Repository
+       become: yes
+       apt_repository:
+         repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ubuntu_version.stdout }} stable"
+         state: present
        
      - name: Install Docker
        become: yes
