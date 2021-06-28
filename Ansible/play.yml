@@ -9,6 +9,12 @@
      - name: Install Git package
        become: yes
        apt: name=git update_cache=yes state=latest
+       
+     - name: Add Docker GPG apt Key
+       become: yes
+       apt_key: 
+         url: https://download.docker.com/linux/ubuntu/gpg
+         state: present
      
      - name: Save the current Ubuntu release version into a variable
        become: yes
@@ -33,14 +39,6 @@
        file:
          path: docker
          state: directory
-    
-     - name: Install pip
-       become: yes
-       apt: name=python3-pip update_cache=yes state=latest
-      
-     - name: install docker
-       become: yes
-       pip: name=docker
          
      - name: Git checkout nodejs site
        become: yes
