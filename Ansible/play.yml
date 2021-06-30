@@ -53,27 +53,39 @@
      - name: Install Docker python
        become: yes
        pip: name=docker
-     
-     - name: Build Docker image from Dockerfile
+       
+     - name: Install Docker Compose
        become: yes
-       docker_image:
-         name: web
-         build:
-           path: docker
-           pull: yes
-         source: build
-         state: present
+       get_url:
+         url: https://github.com/docker/compose/releases/download/1.25.1/docker-compose-Linux-x86_64
+         dest: "/usr/local/bin/docker-compose"
+         mode: 0755
      
-     - name: Running the container
-       become: yes
-       docker_container:
-         image: web:latest
-         name: webApp
-         state: started
-         restart_policy: always
-         exposed_ports: "{{ app_port }}"
-         published_ports: "{{ app_port }}:3000"
+#     - name: Build Docker image from Dockerfile
+#       become: yes
+#       docker_image:
+#         name: web
+#         build:
+#           path: docker
+#           pull: yes
+#         source: build
+#         state: present
+     
+#     - name: Running the container
+#       become: yes
+#       docker_container:
+#         image: web:latest
+#         name: webApp
+#         state: started
+#         restart_policy: always
+#         exposed_ports: "{{ app_port }}"
+#         published_ports: "{{ app_port }}:3000"
          
+     - name: Docker Compose
+       docker_compose:
+         project_src: docker
+         files:
+         - docker-compose.yml
         
      - name: Check if container is running
        become: yes
