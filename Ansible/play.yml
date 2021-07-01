@@ -37,14 +37,14 @@
      - name: Creates directory
        become: yes
        file:
-         path: docker
+         path: /home/ubuntu/docker
          state: directory
          
      - name: Git checkout nodejs site
        become: yes
        git:
          repo: "{{ app_repo }}"
-         dest: docker
+         dest: /home/ubuntu/docker
              
      - name: Install pip
        become: yes
@@ -52,9 +52,7 @@
       
      - name: Install Docker module
        become: yes
-       pip: name=docker
-       
-     
+       pip: name=docker     
        
      - name: Install Docker Compose
        become: yes
@@ -106,7 +104,7 @@
                 ports: 
                 - "27017:27017"
              myApp:
-                build: /docker
+                build: /home/ubuntu/docker
                 networks:
                 - myNet
                 restart: always
