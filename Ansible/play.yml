@@ -130,7 +130,7 @@
      - debug:
         var: output
 
-    - assert:
-        that:
-          - "website.devops_website_1.state.running"
-          - "mongo.devops_mongo_1.state.running"
+     - assert:
+         that:
+           - "website.devops_website_1.state.running"
+           - "mongo.devops_mongo_1.state.running"
