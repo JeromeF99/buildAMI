@@ -96,6 +96,7 @@
        become: yes
        docker_compose:
          definition:
+           project_name: website
            services:
              mongo:
                 name: db
