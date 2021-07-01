@@ -99,18 +99,19 @@
          definition:  
            services:
              mongo:
-                name: db
                 image: mongo
                 networks:
                 - myNet
                 restart: always
-                ports: "27017:27017"
+                ports: 
+                - "27017:27017"
              myApp:
                 build: docker
                 networks:
                 - myNet
                 restart: always
-                ports: "{{ app_port }}:3000"
+                ports: 
+                - "{{ app_port }}:3000"
     
 #     - name: Docker Compose
 #       become: yes
