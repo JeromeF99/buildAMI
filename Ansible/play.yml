@@ -99,12 +99,14 @@
            services:
              mongo:
                 image: mongo
-                networks: myNet
+                networks: 
+                - myNet
                 restart: always
                 ports: "27017:27017"
              app:
                 build: docker
-                networks: myNet
+                networks: 
+                - myNet
                 restart: always
                 ports: "{{ app_port }}:3000"
     
