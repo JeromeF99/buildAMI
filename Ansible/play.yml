@@ -93,7 +93,7 @@
      - name: Docker Compose
        become: yes
        docker_compose:
-         project_name: website
+         project_name: devops
          definition:  
            services:
              mongo:
@@ -108,6 +108,7 @@
                 restart: always
                 ports: 
                 - "{{ app_port }}:3000"
+       register: output
     
 #     - name: Docker Compose
 #       become: yes
@@ -125,3 +126,11 @@
        become: yes
        debug:
          msg: "Container Output: {{ps_output.stdout}}" 
+         
+     - debug:
+        var: output
+
+    - assert:
+        that:
+          - "website.devops_website_1.state.running"
+          - "mongo.devops_mongo_1.state.running"
