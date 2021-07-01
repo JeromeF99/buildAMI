@@ -95,8 +95,8 @@
      - name: Docker Compose
        become: yes
        docker_compose:
-         definition:
-           project_name: website
+         project_name: website
+         definition:  
            services:
              mongo:
                 name: db
