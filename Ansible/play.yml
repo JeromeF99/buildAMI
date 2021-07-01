@@ -98,15 +98,14 @@
          defintion:
            services:
              mongo:
+                name: db
                 image: mongo
-                networks: 
-                - myNet
                 restart: always
                 ports: "27017:27017"
-             app:
+             myApp:
                 build: docker
-                networks: 
-                - myNet
+                links: 
+                - db
                 restart: always
                 ports: "{{ app_port }}:3000"
     
