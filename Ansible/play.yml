@@ -82,6 +82,7 @@
 #         published_ports: "{{ app_port }}:3000"
          
      - name: Docker Compose
+       become: yes
        docker_compose:
          project_src: docker
          files:
