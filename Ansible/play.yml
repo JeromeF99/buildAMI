@@ -106,7 +106,7 @@
                 ports: 
                 - "27017:27017"
              myApp:
-                build: docker
+                build: /docker
                 networks:
                 - myNet
                 restart: always
