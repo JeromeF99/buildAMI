@@ -98,17 +98,13 @@
            services:
              mongo:
                 image: mongo
-                networks:
-                   myNet:
-                     external: true
                 restart: always
                 ports: 
                 - "27017:27017"
              website:
                 build: /docker
-                networks:
-                   myNet:
-                     external: true
+                links:
+                - mongo
                 restart: always
                 ports: 
                 - "{{ app_port }}:3000"
