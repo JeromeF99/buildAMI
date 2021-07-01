@@ -87,12 +87,33 @@
 #         exposed_ports: "{{ app_port }}"
 #         published_ports: "{{ app_port }}:3000"
          
+     - name: Create a network
+       become: yes
+       docker_network:
+          name: myNet
+          
      - name: Docker Compose
        become: yes
        docker_compose:
-         project_src: docker
-         files:
-         - docker-compose.yml
+         defintion:
+           services:
+             mongo:
+                image: mongo
+                networks: myNet
+                restart: always
+                ports: "27017:27017"
+             app:
+                build: docker
+                networks: myNet
+                restart: always
+                ports: "{{ app_port }}:3000"
+    
+#     - name: Docker Compose
+#       become: yes
+#       docker_compose:
+#         project_src: docker
+#         files:
+#         - docker-compose.yml
         
      - name: Check if container is running
        become: yes
